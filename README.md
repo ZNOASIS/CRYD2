@@ -22,9 +22,9 @@ $$
 在训练策略的选择上，我们使用带Momentum的SGD算法作为模型的优化器，并使用带Warm-Up的余弦退火(Consine Annealing)策略作为学习率衰减的方法。实验中我们发现逐epoch的学习率衰减性能优于逐iteration的学习率衰减策略，因此我们最终选用了逐epoch的余弦退火作为我们的学习率衰减策略。
 所有的实验中，我们取epoch = 90，max_lr =0.1，start_lr = 0.01，momentum =0.9。同时，为了进一步缓解模型的过拟合，我们对网络参数加上了幅度为4e-4的L2 weight decay项。
 
-
-<img src="https://github.com/ZNOASIS/CRYD2/blob/main/2.2.png" style="width: 60%; height: auto;">
-
+<div align=center>
+<img src="https://github.com/ZNOASIS/CRYD2/blob/main/2.2.png"  style="width: 60%; height: auto;"> 
+</div>
 
 <p align="center">图2.1 余弦退火</p>
 
@@ -32,7 +32,9 @@ $$
 ### 1、上采样
 由于个别类别数据量少，为了保证少样本类别识别效果，我们对数据进行了上采样操作，将每一个类别都补充到相同的个数。
 
-<img src="https://github.com/ZNOASIS/CRYD2/blob/main/3.1.png" style="width: 60%; height: auto;">
+<div align=center>
+<img src="https://github.com/ZNOASIS/CRYD2/blob/main/3.1.png"  style="width: 60%; height: auto;"> 
+</div>
 
 <p align="center">图3.1 上采样</p>
 
@@ -41,7 +43,9 @@ $$
 如图所示，通过对训练集的观察我们发现，训练集中的关键点序列大部分都是300帧长，为了更好充分利用数据，我们使用了分段随机采样选取256帧进行处理。对于长度小于256的样本，我们将其添加全0帧补全。对与长度大于256帧的样本，我们使用分段均匀采样方法，将其长度压缩至256帧。
 具体的做法为：将样本按照有效帧的长度划分为256个区间，在训练过程中，每次分别从每一段中随机采样一帧组成一个长度为256帧的样本作为模型的输入。
 
-<img src="https://github.com/ZNOASIS/CRYD2/blob/main/3.2.png" style="width: 60%; height: auto;">
+<div align=center>
+<img src="https://github.com/ZNOASIS/CRYD2/blob/main/3.2.png"  style="width: 60%; height: auto;"> 
+</div>
 
 <p align="center">图3.2 分段随机采样</p>
 
@@ -80,3 +84,4 @@ $$
 |Bone Motion（BM）	|3|
 
 以上各个模态我们都没有预先生成，均在训练过程中根据对应config，在feeder中动态处理出各个模态，获得带有角度模态的代码参见feeder相同目录下的tools.py文件中get_JA函数。
+## 五、全流程复现
