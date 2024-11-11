@@ -69,7 +69,7 @@ $$
 
 <p align="center">图4.1 人体骨架图</p>
 
-为了保证输入数据维度一致性，我们分别在六种角度上，对每一个骨架节点都构造并求得了一个角度，得到特征形状为（6，300，17，2）的特征，方便后续特征融合。角度的求法我们选用向量的内积除以向量模长得到。
+为了保证输入数据维度一致性，我们分别在六种角度上，对每一个关节点都构造并求得了一个角度，得到特征形状为（6，300，17，2）的特征，方便后续特征融合。角度的求法我们选用向量的内积除以向量模长得到。
 
 表2
 |特征组合（缩写）	|特征维度|
@@ -83,7 +83,7 @@ $$
 
 以上各个模态我们都没有预先生成，均在训练过程中根据对应config，在feeder中动态处理出各个模态，获得带有角度模态的代码参见feeder相同目录下的tools.py文件中get_JA函数。
 ## 五、全流程复现
-使用根目录下的UP.py文件对数据和标签进行上采样处理，请注意修改config和命令行为自己的路径，然后分别用三个模型对各个模态进行训练。
+首先使用根目录下的UP.py文件对数据和标签进行上采样处理，请注意修改config文件和命令中的路径为自己的本地路径，然后分别用三个模型对各个模态进行训练。
 
 ```
 python autodl-tmp/SkateFormer-main/main.py --config autodl-tmp/SkateFormer-main/config/train/ntu_cs/SkateFormer_j.yaml --work-dir autodl-tmp/SkateFormer-main/work_dir/j --device 2 3
@@ -138,4 +138,4 @@ python data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Forme
 python data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Former/main.py --config data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Former/config/mixformer_V2_k2a.yaml --work-dir data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Former/work_dir_test/k2a --phase test --save-score True --weights data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Former/work_dir/k2a/runs-89-13617.pt --device 1
 python data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Former/main.py --config data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Former/config/mixformer_V2_k2M.yaml --work-dir data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Former/work_dir_test/k2M --phase test --save-score True --weights data/CRYD/CRYD-main/HDBN/ICMEW2024-Track10-main/Model_inference/Mix_Former/work_dir/k2m/runs-94-14382.pt --device 2
 ```
-用根目录下的search_best.py对验证集进行最优融合参数搜索，然后用ensemble.py测试集进行合成.注意，我们认为效果不好的模型能够给权重融合带了反例，因此我们搜索范围下界是负数。
+用根目录下的search_best.py对验证集进行最优融合参数搜索，然后用ensemble.py测试集进行合成.注意，我们认为效果不好的模型能够给权重融合带来反例，因此我们搜索范围下界是负数。
