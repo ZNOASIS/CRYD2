@@ -20,7 +20,7 @@ $$
 - C 是类别数， $p_{i} $是预测的类别i的概率
 ### 2、余弦退火
 在训练策略的选择上，我们使用带Momentum的SGD算法作为模型的优化器，并使用带Warm-Up的余弦退火(Consine Annealing)策略作为学习率衰减的方法。实验中我们发现逐epoch的学习率衰减性能优于逐iteration的学习率衰减策略，因此我们最终选用了逐epoch的余弦退火作为我们的学习率衰减策略。
-所有的实验中，我们取epoch = 90，max_lr =0.1，start_lr = 0.01，momentum =0.9。同时，为了进一步缓解模型的过拟合，我们对网络参数加上了幅度为4e-4的L2 weight decay项。
+以CTRGCN训练过程为例，我们取epoch = 90，max_lr =0.1，start_lr = 0.01，momentum =0.9。同时，为了进一步缓解模型的过拟合，我们对网络参数加上了幅度为4e-4的L2 weight decay项。
 
 <div align=center>
 <img src="https://github.com/ZNOASIS/CRYD2/blob/main/2.2.png"  style="width: 60%; height: auto;"> 
